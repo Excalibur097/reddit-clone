@@ -1,0 +1,9 @@
+import { Stack, Slot } from "expo-router"
+
+const RootLayout = ()=>{
+  return(
+    <Slot/>
+  )
+}
+
+export default RootLayout;
