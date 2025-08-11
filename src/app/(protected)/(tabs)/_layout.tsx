@@ -6,10 +6,22 @@ import {
   MaterialIcons,
   Entypo
 } from "@expo/vector-icons";
+import { useAuth } from "@clerk/clerk-expo";
 
 const Tablayout = ()=>{
+  const {signOut} = useAuth()
   return(
-    <Tabs screenOptions={{tabBarActiveTintColor: 'black'}}>
+    <Tabs screenOptions={{
+      tabBarActiveTintColor: 'black',
+      headerRight: () =>
+          <Feather
+            name="log-out"
+            size={22}
+            color="black"
+            style={{ paddingRight: 10 }}
+            onPress={()=>signOut()}
+          />
+      }}>
       <Tabs.Screen 
       name="index"
       options={{
@@ -41,8 +53,8 @@ const Tablayout = ()=>{
       name="create"
       options={{
         title:'Create',
-        headerTitle:'Create',
-        headerTintColor: '#FF5700',
+        headerShown:false,
+        tabBarStyle:{display:"none"},
         tabBarIcon: ({color})=> <MaterialIcons name="create" size={24} color={color} />,
       }}/>
 
