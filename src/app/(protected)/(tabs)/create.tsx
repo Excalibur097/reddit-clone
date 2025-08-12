@@ -1,20 +1,76 @@
-import {Pressable, Text, View} from 'react-native';
+import {Pressable,Text,View,StyleSheet,TextInput,KeyboardAvoidingView,Platform,ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {AntDesign, MaterialIcons, Entypo} from "@expo/vector-icons"
 import { router } from 'expo-router';
+import { useState } from 'react';
 
 const Createscreen = () => {
+  const [title, setTitle] = useState<string>('');
+  const [body, setBody] = useState<string>('')
+
   return (
-    <SafeAreaView style={{flex:1, backgroundColor:"white"}}>
+    <SafeAreaView style={{flex:1, backgroundColor:"white", paddingHorizontal:10}}>
       <View style={{flexDirection:'row'}}>
-        <AntDesign name = "close" size={24} color="black" onPress={()=>console}/>
+        <AntDesign name = "close" size={24} color="black" onPress={()=>router.back()}/>
         <Pressable style={{marginLeft:'auto', alignItems:'center'}}>
-          <Text style={{color:"white",backgroundColor:"#115BCA",fontWeight:'bold'}}>Post</Text>
+          <Text style={styles.postText}>Post</Text>
         </Pressable>
       </View>
+
+      <KeyboardAvoidingView behavior={Platform.OS ==="ios"?'padding':'height'}>
+        <ScrollView>
+          <View style={styles.communityContainer}>
+            <Text style={styles.rstyles}>r/</Text>
+            <Text style={{fontWeight:600}}>Select community</Text>
+          </View>
+
+          <TextInput 
+            placeholder='title'
+            style ={{fontSize:20,fontWeight:'bold',paddingVertical:20}}
+            value={title}
+            onChangeText={(text)=>setTitle(text)}
+            multiline
+          />
+          <TextInput 
+            placeholder='body text (optional)'
+            value={body}
+            onChangeText={(text)=>setBody(text)}
+            multiline
+            scrollEnabled
+          />
+        </ScrollView>
+      </KeyboardAvoidingView>
      
     </SafeAreaView>
   )
 }
+
+const styles= StyleSheet.create({
+  postText:{
+    color:"white",
+    backgroundColor:"#115BCA",
+    fontWeight:'bold',
+    paddingVertical:2,
+    paddingHorizontal:7,
+    borderRadius:10
+  },
+  rstyles:{
+    backgroundColor:'black',
+    color:'white',
+    paddingVertical:1,
+    paddingHorizontal:5,
+    borderRadius:10,
+    fontWeight:'bold'
+  },
+  communityContainer:{
+    flexDirection:'row',
+    backgroundColor:'#EDEDED',
+    padding:10,
+    borderRadius:20,
+    gap:5,
+    alignSelf:'flex-start',
+    marginVertical:10
+  }
+})
 
 export default Createscreen;
