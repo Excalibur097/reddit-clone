@@ -1,6 +1,5 @@
 import { Text, View, Image, StyleSheet } from "react-native";
 import { Link } from "expo-router";
-import posts from '../../assets/data/posts.json';
 import { formatDistanceToNowStrict } from "date-fns";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Post } from "../types";

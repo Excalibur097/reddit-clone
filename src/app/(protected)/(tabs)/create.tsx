@@ -1,28 +1,36 @@
 import {Pressable,Text,View,StyleSheet,TextInput,KeyboardAvoidingView,Platform,ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {AntDesign, MaterialIcons, Entypo} from "@expo/vector-icons"
-import { router } from 'expo-router';
+import { router,Link } from 'expo-router';
 import { useState } from 'react';
 
 const Createscreen = () => {
   const [title, setTitle] = useState<string>('');
-  const [body, setBody] = useState<string>('')
+  const [body, setBody] = useState<string>('');
+
+  const goBack = ()=>{
+    setTitle('')
+    setBody('')
+    router.back()
+  }
 
   return (
     <SafeAreaView style={{flex:1, backgroundColor:"white", paddingHorizontal:10}}>
       <View style={{flexDirection:'row'}}>
-        <AntDesign name = "close" size={24} color="black" onPress={()=>router.back()}/>
+        <AntDesign name = "close" size={24} color="black" onPress={()=>goBack()}/>
         <Pressable style={{marginLeft:'auto', alignItems:'center'}}>
           <Text style={styles.postText}>Post</Text>
         </Pressable>
       </View>
 
-      <KeyboardAvoidingView behavior={Platform.OS ==="ios"?'padding':'height'}>
-        <ScrollView>
-          <View style={styles.communityContainer}>
-            <Text style={styles.rstyles}>r/</Text>
-            <Text style={{fontWeight:600}}>Select community</Text>
-          </View>
+      <KeyboardAvoidingView behavior={Platform.OS ==="ios"?'padding':undefined} style={{flex:1}}>
+        <ScrollView style={{paddingVertical:10}}>
+          <Pressable onPress={()=>router.push('/groupSelector')}>
+            <View style={styles.communityContainer}>
+              <Text style={styles.rstyles}>r/</Text>
+              <Text style={{fontWeight:600}}>Select community</Text>
+            </View>
+          </Pressable>
 
           <TextInput 
             placeholder='title'
@@ -30,13 +38,14 @@ const Createscreen = () => {
             value={title}
             onChangeText={(text)=>setTitle(text)}
             multiline
+            scrollEnabled={false}
           />
           <TextInput 
             placeholder='body text (optional)'
             value={body}
             onChangeText={(text)=>setBody(text)}
             multiline
-            scrollEnabled
+            scrollEnabled={false}
           />
         </ScrollView>
       </KeyboardAvoidingView>
