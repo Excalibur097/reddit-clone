@@ -1,12 +1,18 @@
-import {Pressable,Text,View,StyleSheet,TextInput,KeyboardAvoidingView,Platform,ScrollView} from 'react-native';
+import {Pressable,Text,
+  View,
+  StyleSheet,
+  TextInput,KeyboardAvoidingView,Platform,Image,ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {AntDesign, MaterialIcons, Entypo} from "@expo/vector-icons"
 import { router,Link } from 'expo-router';
 import { useState } from 'react';
+import { selectedGroupsAtom } from '../../../atoms';
+import { useAtom } from 'jotai';
 
 const Createscreen = () => {
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
+  const [group, setGroup] = useAtom(selectedGroupsAtom) 
 
   const goBack = ()=>{
     setTitle('')
@@ -26,6 +32,9 @@ const Createscreen = () => {
       <KeyboardAvoidingView behavior={Platform.OS ==="ios"?'padding':undefined} style={{flex:1}}>
         <ScrollView style={{paddingVertical:10}}>
           <Pressable onPress={()=>router.push('/groupSelector')}>
+            {
+              
+            }
             <View style={styles.communityContainer}>
               <Text style={styles.rstyles}>r/</Text>
               <Text style={{fontWeight:600}}>Select community</Text>

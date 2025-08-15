@@ -23,10 +23,11 @@ const groupSelector = () => {
         <AntDesign name='search1' size={16} color='grey'/>
         <TextInput 
           placeholder='search for community'
-          style={{paddingVertical:10}}
+          style={{paddingVertical:10,flex:1}}
           value={serarchValue}
           onChangeText={(text)=> setSearchValue(text)}
         />
+        <AntDesign name='closecircle' size={15} color='#E4E4E4' onPress={()=>setSearchValue('')}/>
       </View>
 
         <FlatList
