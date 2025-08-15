@@ -12,7 +12,7 @@ import { useAtom } from 'jotai';
 const Createscreen = () => {
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-  const [group, setGroup] = useAtom(selectedGroupsAtom) 
+  const [group] = useAtom(selectedGroupsAtom) 
 
   const goBack = ()=>{
     setTitle('')
@@ -25,19 +25,27 @@ const Createscreen = () => {
       <View style={{flexDirection:'row'}}>
         <AntDesign name = "close" size={24} color="black" onPress={()=>goBack()}/>
         <Pressable style={{marginLeft:'auto', alignItems:'center'}}>
-          <Text style={styles.postText}>Post</Text>
+          <Text style={styles.postText}>Pot</Text>
         </Pressable>
       </View>
 
       <KeyboardAvoidingView behavior={Platform.OS ==="ios"?'padding':undefined} style={{flex:1}}>
         <ScrollView style={{paddingVertical:10}}>
           <Pressable onPress={()=>router.push('/groupSelector')}>
-            {
-              
-            }
             <View style={styles.communityContainer}>
-              <Text style={styles.rstyles}>r/</Text>
-              <Text style={{fontWeight:600}}>Select community</Text>
+              {
+                group ?(
+                  <>
+                    <Image source={{uri:group.image}} style={{width:20,height:20}}/>
+                    <Text>{group.name}</Text>
+                  </>
+                ):(
+                  <>
+                    <Text style={styles.rstyles}>r/</Text>
+                    <Text style={{fontWeight:600}}>Select community</Text>
+                  </>
+                )
+              }
             </View>
           </Pressable>
 

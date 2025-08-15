@@ -4,10 +4,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import {AntDesign} from  "@expo/vector-icons"
 import { router } from 'expo-router';
 import groups from '../../../assets/data/groups.json'
+import { selectedGroupsAtom } from '../../atoms';
+import { useSetAtom } from 'jotai/react';
+import { type Group } from '../../types';
 
 const groupSelector = () => {
   const [serarchValue, setSearchValue] = useState<string>('');
   const filteredGroup = groups.filter((group)=> group.name.toLowerCase().includes(serarchValue.toLowerCase()))
+  const setGroup = useSetAtom(selectedGroupsAtom)
+
+  const handleGruopSelect = (group:Group)=>{
+    setGroup(group)
+    router.back()
+  }
 
   return (
     <SafeAreaView style={{marginHorizontal:10}}>
@@ -33,7 +42,8 @@ const groupSelector = () => {
         <FlatList
           data={filteredGroup}
           renderItem={({item})=>(
-            <Pressable style={{flexDirection:'row',alignItems:'center',gap:5,marginBottom:20}}>
+            <Pressable style={{flexDirection:'row',alignItems:'center',gap:5,marginBottom:20}}
+            onPress={()=> handleGruopSelect(item)}>
               <Image source={{uri:item.image}} style={{width:40, aspectRatio:1,borderRadius:20}}/>
               <Text style={{fontWeight:'600'}}>{item.name}</Text>
             </Pressable>
