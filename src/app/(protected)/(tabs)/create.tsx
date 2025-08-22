@@ -25,7 +25,7 @@ const Createscreen = () => {
       <View style={{flexDirection:'row'}}>
         <AntDesign name = "close" size={24} color="black" onPress={()=>goBack()}/>
         <Pressable style={{marginLeft:'auto', alignItems:'center'}}>
-          <Text style={styles.postText}>Pot</Text>
+          <Text style={styles.postText}>Post</Text>
         </Pressable>
       </View>
 
@@ -36,13 +36,13 @@ const Createscreen = () => {
               {
                 group ?(
                   <>
-                    <Image source={{uri:group.image}} style={{width:20,height:20}}/>
-                    <Text>{group.name}</Text>
+                    <Image source={{uri:group.image}} style={{width:20,height:20, borderRadius:10}}/>
+                    <Text style={{fontWeight:'600'}}>{group.name}</Text>
                   </>
                 ):(
                   <>
                     <Text style={styles.rstyles}>r/</Text>
-                    <Text style={{fontWeight:600}}>Select community</Text>
+                    <Text style={{fontWeight:'600'}}>Select community</Text>
                   </>
                 )
               }

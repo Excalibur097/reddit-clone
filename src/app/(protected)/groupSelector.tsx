@@ -18,10 +18,15 @@ const groupSelector = () => {
     router.back()
   }
 
+  const handleBackIcon = ()=>{
+    setGroup(null)
+    router.back()
+  }
+
   return (
     <SafeAreaView style={{marginHorizontal:10}}>
       <View style={{flexDirection:'row', alignItems:'center'}}>
-        <AntDesign name='close' size={30} color='black' onPress={()=>router.back()}/>
+        <AntDesign name='close' size={30} color='black' onPress={()=>handleBackIcon()}/>
         <Text style={{fontSize:16,fontWeight:'bold',flex:1,textAlign:'center', paddingRight:30}}>
           Post to
         </Text>
