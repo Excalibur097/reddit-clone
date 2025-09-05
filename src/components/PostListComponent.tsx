@@ -4,10 +4,12 @@ import { formatDistanceToNowStrict } from "date-fns";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Post } from "../types";
 
+
 type Postprops = {
   post:Post,
   isDetailedPost?:boolean
 }
+
 
 const PostListComponent = ({post, isDetailedPost}:Postprops)=>{
   const shouldShowImage = isDetailedPost || post.image
@@ -15,7 +17,7 @@ const PostListComponent = ({post, isDetailedPost}:Postprops)=>{
  
   return(
     <Link href={`post/${post.id}`}>
-      <View style={{paddingVertical:10, paddingHorizontal:15, backgroundColor:"white"}}>
+      <View style={{paddingVertical:10, paddingHorizontal:15, backgroundColor:"white",width:'100%'}}>
       {/*POST HEADER */}
         <View style={{flexDirection:"row", gap:10}}>
           <Image source={{uri:post.group.image}} style={{width:20, height:20, borderRadius:10}}/>
@@ -24,7 +26,7 @@ const PostListComponent = ({post, isDetailedPost}:Postprops)=>{
               <Text style={{fontWeight:"bold"}}>{post.group.name}</Text>
               <Text style={{color:"grey"}}>{formatDistanceToNowStrict(new Date(post.created_at))}</Text>
             </View>
-            {isDetailedPost && <Text style={{fontSize:13,color:'#2E5DAA'}}>{post.user.name}</Text>}
+            {isDetailedPost && <Text style={{fontSize:13,color:'blue'}}>{post.id}</Text>}
           </View>
           <View style={{marginLeft:"auto"}}>
             <Text style={styles.joinButtonText}>Join</Text>

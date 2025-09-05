@@ -1,17 +1,32 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, Pressable, FlatList, Image} from 'react-native'
+import { View, Text, TextInput, Pressable, FlatList, Image, ActivityIndicator} from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {AntDesign} from  "@expo/vector-icons"
 import { router } from 'expo-router';
-import groups from '../../../assets/data/groups.json'
 import { selectedGroupsAtom } from '../../atoms';
 import { useSetAtom } from 'jotai/react';
 import { type Group } from '../../types';
+import { useSupabase } from '../../lib/supabase';
+import { useQuery } from '@tanstack/react-query';
+import { SupabaseClient } from '@supabase/supabase-js';
+
+const fetchGroups = async(search:string, supabase:SupabaseClient)=>{
+  const {data,error} = await supabase
+  .from('groups').select('*')
+  .ilike('name', `%${search}%`)
+  if (error){
+    throw Error
+  }else{
+    return data
+  }
+  
+}
+
 
 const groupSelector = () => {
-  const [serarchValue, setSearchValue] = useState<string>('');
-  const filteredGroup = groups.filter((group)=> group.name.toLowerCase().includes(serarchValue.toLowerCase()))
+  const [searchValue, setSearchValue] = useState<string>('');
   const setGroup = useSetAtom(selectedGroupsAtom)
+  const supabase = useSupabase()
 
   const handleGruopSelect = (group:Group)=>{
     setGroup(group)
@@ -22,6 +37,26 @@ const groupSelector = () => {
     setGroup(null)
     router.back()
   }
+
+  const {data,isLoading,error} = useQuery({
+    queryKey:['groups',searchValue],
+    queryFn:async ()=>fetchGroups(searchValue,supabase),
+    placeholderData :(previousData)=>previousData
+  
+  })
+
+  if (isLoading){
+    return(
+      <ActivityIndicator style={{flex:1}}/>
+    )
+  }
+
+  if (error ||!data){
+    return(
+        <Text style={{flex:1}}>Unable to load resources</Text>
+    )
+  }
+
 
   return (
     <SafeAreaView style={{marginHorizontal:10}}>
@@ -38,14 +73,14 @@ const groupSelector = () => {
         <TextInput 
           placeholder='search for community'
           style={{paddingVertical:10,flex:1}}
-          value={serarchValue}
+          value={searchValue}
           onChangeText={(text)=> setSearchValue(text)}
         />
         <AntDesign name='closecircle' size={15} color='#E4E4E4' onPress={()=>setSearchValue('')}/>
       </View>
 
         <FlatList
-          data={filteredGroup}
+          data={data}
           renderItem={({item})=>(
             <Pressable style={{flexDirection:'row',alignItems:'center',gap:5,marginBottom:20}}
             onPress={()=> handleGruopSelect(item)}>

@@ -8,7 +8,7 @@ export default function SignUpScreen() {
   const router = useRouter()
 
   const [emailAddress, setEmailAddress] = React.useState<string>('')
-  const [username, setUsername] = React.useState<string>('')
+  //const [username, setUsername] = React.useState<string>('')
   const [password, setPassword] = React.useState<string>('')
   const [pendingVerification, setPendingVerification] = React.useState<boolean>(false)
   const [code, setCode] = React.useState<string>('')
@@ -21,7 +21,6 @@ export default function SignUpScreen() {
     try {
       await signUp.create({
         emailAddress,
-        username: `u/${username}`,
         password,
       })
 
@@ -67,7 +66,8 @@ export default function SignUpScreen() {
 
   if (pendingVerification) {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+      <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
         <Text style={styles.title}>Verify Your Email</Text>
         <TextInput
           style={styles.input}
@@ -82,7 +82,8 @@ export default function SignUpScreen() {
   }
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
       <Text style={styles.title}>Sign Up</Text>
       <TextInput
         style={styles.input}
@@ -91,14 +92,6 @@ export default function SignUpScreen() {
         placeholder="Enter email"
         placeholderTextColor="#aaa"
         onChangeText={setEmailAddress}
-      />
-      <TextInput
-        style={styles.input}
-        autoCapitalize="none"
-        value={username}
-        placeholder="Username"
-        placeholderTextColor="#aaa"
-        onChangeText={setUsername}
       />
       <TextInput
         style={styles.input}

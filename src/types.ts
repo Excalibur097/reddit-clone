@@ -7,7 +7,7 @@ export type Post = {
   image: string | null;
   description: string | null;
   group: Group;
-  user: User;
+  //user: User;
 }
 
 export type Comment = {

@@ -12,7 +12,7 @@ type CommentListItemProps = {
 
 const CommentListItem = ({ comment,depth,handleReplyButton }: CommentListItemProps) => {
   const [showReplies,setShowReplies] = useState<boolean>(false);
-  console.log('I am rendered')
+  //console.log('I am rendered')
 
   return (
     <View

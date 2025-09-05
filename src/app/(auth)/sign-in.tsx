@@ -7,7 +7,8 @@ import {
   TouchableOpacity, 
   StyleSheet, Button, 
   KeyboardAvoidingView, 
-  Platform 
+  Platform, 
+  Alert
 } from "react-native";
 import React from 'react'
 
@@ -41,6 +42,7 @@ export default function Page() {
         console.error(JSON.stringify(signInAttempt, null, 2))
       }
     } catch (err) {
+      Alert.alert("Unable to signup")
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2))
@@ -48,7 +50,8 @@ export default function Page() {
   }, [isLoaded, emailAddress, password])
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 20}>
       <Text style={styles.title}>Sign In</Text>
       <TextInput
         style={styles.input}
